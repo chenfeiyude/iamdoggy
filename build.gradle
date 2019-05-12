@@ -1,7 +1,32 @@
+/*
+To reduce build time, see solutions here https://stackoverflow.com/questions/37063217/stuck-with-gradle-build-running
+
+1. change your eclipse jre to 1.8
+
+2. Compiring war file:
+gradle clean build
+
+if only small changes, then just simply
+gradle build
+
+build without junit test
+gradle clean build -x test
+
+3. Setting up ide with gradle configure:
+gradle idea
+
+4. To check jar dependencies
+gradle dependencies
+
+gradle dependencies --configuration runtime
+
+*/
+
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
 	id 'war'
+	id 'idea'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -9,18 +34,28 @@ apply plugin: 'io.spring.dependency-management'
 group = 'com.iamdoggy'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+ext['tomcat.version'] = '7.0.59'
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.1.Final'
+	compile group: 'org.hibernate', name: 'hibernate-c3p0', version: '5.1.5.Final'
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.1.1.Final' // for error Caused by: org.hibernate.cfg.beanvalidation.IntegrationException: Error activating Bean Validation integration
+	compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.2' // for error Caused by: java.lang.AbstractMethodError: com.mchange.v2.c3p0.impl.NewProxyConnection.createClob()Ljava/sql/Clob
+	compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.8.1'
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'mysql:mysql-connector-java'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedRuntime group: 'javax.el', name: 'javax.el-api', version: '3.0.0' // for error Caused by: java.lang.NoClassDefFoundError: javax/el/ELManager
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
