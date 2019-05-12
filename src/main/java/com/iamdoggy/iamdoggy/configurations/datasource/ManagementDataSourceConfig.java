@@ -30,14 +30,12 @@ public class ManagementDataSourceConfig extends CommonDataSourceConfig {
 	}
 
 	@Bean(name = "managementDatasource")
-	@Primary
     @ConfigurationProperties(prefix="management.datasource")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Bean(name = "managementSessionFactory")
-    @Primary
     public LocalSessionFactoryBean managementSessionFactory() {
     	LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(poolDataSource());
@@ -49,7 +47,6 @@ public class ManagementDataSourceConfig extends CommonDataSourceConfig {
     }
     
     @Bean(name = "managementEntityManagerFactory")
-    @Primary
     public LocalContainerEntityManagerFactoryBean managementEntityManagerFactory() {
          LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
          em.setDataSource(poolDataSource());
@@ -60,7 +57,6 @@ public class ManagementDataSourceConfig extends CommonDataSourceConfig {
     }
     
     @Bean(name = "managementTransactionManager")
-    @Primary
     public PlatformTransactionManager managementTransactionManager()
     {
         EntityManagerFactory factory = managementEntityManagerFactory().getObject();
