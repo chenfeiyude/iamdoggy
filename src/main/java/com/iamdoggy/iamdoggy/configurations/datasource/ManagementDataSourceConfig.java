@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -19,9 +18,9 @@ import javax.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableJpaRepositories(
-		basePackages = {"com.iamdoggy.iamdoggy.interfaces.daos.doggy"},
-        entityManagerFactoryRef = "doggyEntityManagerFactory",
-        transactionManagerRef = "doggyTransactionManager")
+		basePackages = {"com.iamdoggy.iamdoggy.interfaces.daos.management"},
+        entityManagerFactoryRef = "managementEntityManagerFactory",
+        transactionManagerRef = "managementTransactionManager")
 public class ManagementDataSourceConfig extends CommonDataSourceConfig {
 
 	@Autowired
