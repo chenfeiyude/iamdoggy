@@ -1,0 +1,40 @@
+package com.iamdoggy.iamdoggy.services.management;
+
+import static org.junit.Assert.*;
+
+import org.apache.http.auth.AuthenticationException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
+import com.iamdoggy.iamdoggy.enums.UserState;
+import com.iamdoggy.iamdoggy.interfaces.management.AuthService;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class AuthServiceTest {
+	
+	@Autowired
+	private AuthService authService;
+	
+	
+	@Test(expected = AuthenticationException.class)
+	public void login() throws AuthenticationException {
+		UserDTO userDTO = authService.login("test", "123");
+		assertNotNull(userDTO);
+		assertEquals(UserState.live.toString(), userDTO.getState());
+		
+		authService.login("test", "wrong password");
+	}
+	
+	@Test
+	public void register() {
+		UserDTO userDTO = authService.register("test_register", "123");
+		assertNotNull(userDTO);
+		assertEquals(UserState.invalidate.toString(), userDTO.getState());
+	}
+	
+}
