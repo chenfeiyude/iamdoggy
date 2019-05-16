@@ -75,7 +75,8 @@ public abstract class CommonDataSourceConfig {
         jpaProperties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
         jpaProperties.put("hibernate.physical_naming_strategy", env.getProperty("spring.jpa.hibernate.naming.physical-strategy"));// fix the _ for dto fields when using jpa
         jpaProperties.put("hibernate.implicit_naming_strategy", env.getProperty("spring.jpa.hibernate.naming.implicit-strategy"));// fix the _ for dto fields when using jpa
-		
+        jpaProperties.put("hibernate.current_session_context_class", env.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
+        
         return jpaProperties;
 	}
 }

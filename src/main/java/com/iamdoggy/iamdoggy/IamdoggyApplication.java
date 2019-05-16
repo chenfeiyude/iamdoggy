@@ -40,11 +40,11 @@ public class IamdoggyApplication implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		doggySessionFactory.getCurrentSession().close();
-		doggySessionFactory.close();
-
-		managementSessionFactory.getCurrentSession().close();
-		managementSessionFactory.close();
+//		doggySessionFactory.getCurrentSession().close();
+//		doggySessionFactory.close();
+//
+//		managementSessionFactory.getCurrentSession().close();
+//		managementSessionFactory.close();
 	}
 	
 	@Bean

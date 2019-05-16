@@ -8,5 +8,6 @@ import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
 @Repository("userJpaDAO")
 public interface UserJpaDAO extends JpaRepository<UserDTO, Long> {
 	UserDTO findByUsername(String username);
+	UserDTO findByUsernameAndToken(String username, String token);
 	
 }
