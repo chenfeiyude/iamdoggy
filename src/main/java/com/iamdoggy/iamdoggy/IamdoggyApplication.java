@@ -16,11 +16,13 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableScheduling
 @EnableAspectJAutoProxy
+@Transactional
 public class IamdoggyApplication implements ServletContextListener {
 
 	@Autowired
@@ -40,11 +42,11 @@ public class IamdoggyApplication implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-//		doggySessionFactory.getCurrentSession().close();
-//		doggySessionFactory.close();
-//
-//		managementSessionFactory.getCurrentSession().close();
-//		managementSessionFactory.close();
+		doggySessionFactory.getCurrentSession().close();
+		doggySessionFactory.close();
+
+		managementSessionFactory.getCurrentSession().close();
+		managementSessionFactory.close();
 	}
 	
 	@Bean

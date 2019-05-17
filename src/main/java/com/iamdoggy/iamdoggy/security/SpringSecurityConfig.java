@@ -43,12 +43,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Override
 		public void configure(WebSecurity web) throws Exception {
 		    web.ignoring().antMatchers(
-		    		"/api/login**", 
-		    		"/api/register**", 
-		    		"/api/register/**", 
-		    		"/api/logout**",
-		    		"/api/reset_password**",
-		    		"/api/forgot_password**")
+		    		"/api/auth/**")
 		    		;
 		}
 

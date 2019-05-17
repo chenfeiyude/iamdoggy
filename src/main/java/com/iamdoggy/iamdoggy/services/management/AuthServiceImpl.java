@@ -74,6 +74,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public UserDTO login(String username, String password) throws AuthenticationException {
+		logger.info(username + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		UserDTO userDTO = userJpaDAO.findByUsername(username);
 		if (userDTO == null || !userDTO.isLive()) {
 			throw new AuthenticationException("Invalid username");
