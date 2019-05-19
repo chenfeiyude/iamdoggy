@@ -20,13 +20,15 @@ public class AuthServiceTest {
 	@Autowired
 	private AuthService authService;
 	
-	
-	@Test(expected = AuthenticationException.class)
-	public void login() throws AuthenticationException {
+	@Test
+	public void loginPass() throws AuthenticationException {
 		UserDTO userDTO = authService.login("test", "123");
 		assertNotNull(userDTO);
 		assertEquals(UserState.live.toString(), userDTO.getState());
-		
+	}
+	
+	@Test(expected = AuthenticationException.class)
+	public void loginFaild() throws AuthenticationException {
 		authService.login("test", "wrong password");
 	}
 	

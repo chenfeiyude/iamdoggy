@@ -8,6 +8,7 @@ import org.apache.http.auth.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class AuthController {
 	 * 		"password": "1234"
 	 * }
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/login")
+	@RequestMapping(method=RequestMethod.POST, value="/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO login(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws AuthenticationException {
 		UserDTO userDTO = authService.login(authUser.getUsername(), authUser.getPassword());
 		
@@ -66,7 +67,7 @@ public class AuthController {
 	 * @param request
 	 * @throws IllegalArgumentException
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/register")
+	@RequestMapping(method=RequestMethod.POST, value="/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void register(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws IllegalArgumentException {
 		UserDTO userDTO = authService.register(authUser.getUsername(), authUser.getPassword());
 		

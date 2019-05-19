@@ -79,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
 		if (userDTO == null || !userDTO.isLive()) {
 			throw new AuthenticationException("Invalid username");
 		}
-		else if (!userDTO.getPassword().equals(passwordEncoder.encode(password))) {
+		else if (!passwordEncoder.matches(password, userDTO.getPassword())) {
 			throw new AuthenticationException("username and password not match");
 		}
 		userDTO.generateToken();
@@ -121,7 +121,7 @@ public class AuthServiceImpl implements AuthService {
 			return null;
 		}
 		
-		if (!user.getPassword().equals(passwordEncoder.encode(cred.getPassword())))
+		if (!passwordEncoder.matches(cred.getPassword(), user.getPassword()))
 		{
 			logger.info("validateLiveUser received incorrect password for: "+username);
 			return null;
