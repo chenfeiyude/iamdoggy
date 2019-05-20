@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
+import com.iamdoggy.iamdoggy.enums.UserState;
 import com.iamdoggy.iamdoggy.interfaces.daos.management.UserJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.management.AuthService;
 
@@ -65,6 +66,7 @@ public class AuthServiceImpl implements AuthService {
 		userDTO = new UserDTO();
 		userDTO.setUsername(username);
 		userDTO.setPassword(passwordEncoder.encode(password));
+		userDTO.setState(UserState.live.toString());// TODO changed to validate and send validate email later
 		userDTO.generateToken();
 		userDTO.appendLog("Register new account");
 		userJpaDAO.save(userDTO);
@@ -74,7 +76,6 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public UserDTO login(String username, String password) throws AuthenticationException {
-		logger.info(username + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		UserDTO userDTO = userJpaDAO.findByUsername(username);
 		if (userDTO == null || !userDTO.isLive()) {
 			throw new AuthenticationException("Invalid username");
