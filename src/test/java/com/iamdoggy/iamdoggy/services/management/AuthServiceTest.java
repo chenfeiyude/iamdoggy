@@ -36,7 +36,7 @@ public class AuthServiceTest {
 	public void register() {
 		UserDTO userDTO = authService.register("test_register", "123");
 		assertNotNull(userDTO);
-		assertEquals(UserState.invalidate.toString(), userDTO.getState());
+		assertEquals(UserState.live.toString(), userDTO.getState());
 	}
 	
 }
