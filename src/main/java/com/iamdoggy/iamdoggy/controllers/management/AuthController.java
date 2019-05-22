@@ -39,15 +39,17 @@ public class AuthController {
 	 * 		"password": "1234"
 	 * }
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method=RequestMethod.POST, value="/login", 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO login(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws AuthenticationException {
 		UserDTO userDTO = authService.login(authUser.getUsername(), authUser.getPassword());
 		
 		HttpSession session = request.getSession(true);	
 		session.setAttribute("username", userDTO.getUsername());
 		session.setAttribute("token", userDTO.getToken());
-		
-		logger.info("Found public user " + userDTO.getUsername());
+		logger.info(session.getId() + "????????????????/");
+		logger.info("Found public user " + userDTO.getUsername() + " with token: " + userDTO.getToken());
 		
 		return userDTO;
 	}

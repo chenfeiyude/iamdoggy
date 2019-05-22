@@ -3,8 +3,6 @@ package com.iamdoggy.iamdoggy.controllers.management;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.http.auth.AuthenticationException;
 import org.junit.Before;
 import org.junit.Test;

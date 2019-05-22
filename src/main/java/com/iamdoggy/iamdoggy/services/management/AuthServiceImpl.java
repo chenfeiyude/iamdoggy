@@ -14,11 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.iamdoggy.iamdoggy.dtos.management.AccountDTO;
 import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
 import com.iamdoggy.iamdoggy.enums.UserState;
+import com.iamdoggy.iamdoggy.interfaces.daos.management.AccountJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.daos.management.UserJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.management.AuthService;
 
@@ -54,6 +57,9 @@ public class AuthServiceImpl implements AuthService {
 	private UserJpaDAO userJpaDAO;
 	
 	@Autowired
+	private AccountJpaDAO accountJpaDAO;
+	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
@@ -70,6 +76,11 @@ public class AuthServiceImpl implements AuthService {
 		userDTO.generateToken();
 		userDTO.appendLog("Register new account");
 		userJpaDAO.save(userDTO);
+		
+		// generate a related account for the new user
+		AccountDTO accountDTO = new AccountDTO();
+		accountDTO.setUid(userDTO.getUid());
+		accountJpaDAO.save(accountDTO);
 		
 		return userDTO;
 	}
@@ -143,6 +154,7 @@ public class AuthServiceImpl implements AuthService {
 			HttpSession session = request.getSession();
 			if(session!=null)
 			{
+				logger.info(session.getId() + "????????????????/");
 				String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
 				String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
 				if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
@@ -194,4 +206,25 @@ public class AuthServiceImpl implements AuthService {
 		}
 		return null;
 	}
+
+	@Override
+	public UserDTO getUserFromSession(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		
+		String username = (String) session.getAttribute(Credentials.KEY_USERNAME);
+		String token = (String) session.getAttribute(Credentials.KEY_TOKEN);
+		
+		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(token)) {
+			throw new SessionAuthenticationException("Session expired");
+		}
+		
+		UserDTO userDTO = userJpaDAO.findByUsernameAndToken(username, token);
+		if (userDTO == null) {
+			throw new SessionAuthenticationException("Invalid username and token");
+		}
+		
+		return userDTO;
+	}
+	
+	
 }

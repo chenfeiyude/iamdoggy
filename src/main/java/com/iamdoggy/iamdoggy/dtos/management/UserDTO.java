@@ -19,6 +19,7 @@ public class UserDTO extends BaseDTO {
     private String state = UserState.invalidate.toString(); // new user is invalidated by default
     private String log = "";
     private LocalDateTime lastLogin;
+    private LocalDateTime created = LocalDateTime.now();
     
 	public String getUid() {
 		return uid;
@@ -68,5 +69,8 @@ public class UserDTO extends BaseDTO {
 	}
 	public void setLastLogin(LocalDateTime lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+	public LocalDateTime getCreated() {
+		return created;
 	}
 }
