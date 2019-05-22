@@ -10,4 +10,14 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class PetRelatedDTO extends BaseDTO {
 	protected long pid;
+
+	public long getPid() {
+		return pid;
+	}
+
+	public void setPid(long pid) {
+		this.pid = pid;
+	}
+	
+	
 }

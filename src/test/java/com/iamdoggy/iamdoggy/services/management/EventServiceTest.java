@@ -16,12 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.iamdoggy.iamdoggy.dtos.doggy.DogDTO;
 import com.iamdoggy.iamdoggy.dtos.management.AccountDTO;
-import com.iamdoggy.iamdoggy.dtos.management.DogBreedConfigureDTO;
+import com.iamdoggy.iamdoggy.dtos.management.PetBreedConfigureDTO;
 import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
 import com.iamdoggy.iamdoggy.enums.PetHealthyState;
 import com.iamdoggy.iamdoggy.enums.PetState;
+import com.iamdoggy.iamdoggy.enums.PetType;
 import com.iamdoggy.iamdoggy.interfaces.daos.management.AccountJpaDAO;
-import com.iamdoggy.iamdoggy.interfaces.daos.management.DogBreedConfigureJpaDAO;
+import com.iamdoggy.iamdoggy.interfaces.daos.management.PetBreedConfigureJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.management.EventService;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +33,7 @@ public class EventServiceTest {
 	private AccountJpaDAO accountJpaDAO;
 	
 	@MockBean
-	private DogBreedConfigureJpaDAO dogBreedConfigureJpaDAO;
+	private PetBreedConfigureJpaDAO dogBreedConfigureJpaDAO;
 	
 	@Autowired
 	private EventService eventService;
@@ -40,7 +41,7 @@ public class EventServiceTest {
 	private UserDTO userDTO;
 	private UserDTO userDTO2; // does not have enough credit
 	private AccountDTO accountDTO;
-	private List<DogBreedConfigureDTO> dogBreedConfigureDTOs;
+	private List<PetBreedConfigureDTO> dogBreedConfigureDTOs;
 	@Before
 	public void setUp() throws Exception {		
 		userDTO = new UserDTO();
@@ -57,15 +58,17 @@ public class EventServiceTest {
 		Mockito.when(accountJpaDAO.findByUid(userDTO2.getUid())).thenReturn(accountDTO);
 		
 		dogBreedConfigureDTOs = new ArrayList<>();
-		DogBreedConfigureDTO dogBreedConfigureDTO = new DogBreedConfigureDTO();
+		PetBreedConfigureDTO dogBreedConfigureDTO = new PetBreedConfigureDTO();
+		dogBreedConfigureDTO.setType(PetType.dog);
 		dogBreedConfigureDTO.setBreed("dog1");
 		dogBreedConfigureDTO.setRarity(0.05);
 		dogBreedConfigureDTOs.add(dogBreedConfigureDTO);
-		dogBreedConfigureDTO = new DogBreedConfigureDTO();
+		dogBreedConfigureDTO = new PetBreedConfigureDTO();
+		dogBreedConfigureDTO.setType(PetType.dog);
 		dogBreedConfigureDTO.setBreed("dog2");
 		dogBreedConfigureDTO.setRarity(0.50);
 		dogBreedConfigureDTOs.add(dogBreedConfigureDTO);
-		Mockito.when(dogBreedConfigureJpaDAO.findAll()).thenReturn(dogBreedConfigureDTOs);
+		Mockito.when(dogBreedConfigureJpaDAO.findAllByType(PetType.dog)).thenReturn(dogBreedConfigureDTOs);
 	}
 	
 	@Test

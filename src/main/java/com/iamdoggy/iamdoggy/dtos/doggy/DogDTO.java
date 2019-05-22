@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.iamdoggy.iamdoggy.dtos.common.PetDTO;
-import com.iamdoggy.iamdoggy.dtos.management.DogBreedConfigureDTO;
+import com.iamdoggy.iamdoggy.dtos.management.PetBreedConfigureDTO;
 import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
 
 @Entity
@@ -14,7 +14,7 @@ public class DogDTO extends PetDTO {
 	
 	public DogDTO() {}
 	
-	public DogDTO(UserDTO userDTO, DogBreedConfigureDTO dogBreedConfigureDTO) {
+	public DogDTO(UserDTO userDTO, PetBreedConfigureDTO dogBreedConfigureDTO) {
 		uid = userDTO.getUid();
 		breed = dogBreedConfigureDTO.getBreed();
 	}

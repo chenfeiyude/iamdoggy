@@ -10,8 +10,8 @@ insert into command_configure(command, activity, difficulty) values ('sit', 'sit
 insert into command_configure(command, activity, difficulty) values ('go', 'release', 0.8);
 insert into command_configure(command, activity, difficulty) values ('stop', 'stop', 0.5);
 
-insert into dog_breed_configure(breed, rarity, cost) values ('corgi', 0.05, 1000);
-insert into dog_breed_configure(breed, rarity, cost) values ('husky', 0.5, 300);
+insert into pet_breed_configure(`type`, breed, rarity, cost) values (0, 'corgi', 0.05, 1000);
+insert into pet_breed_configure(`type`, breed, rarity, cost) values (0, 'husky', 0.5, 300);
 
 
 
