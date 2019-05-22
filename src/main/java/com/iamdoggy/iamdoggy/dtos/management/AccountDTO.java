@@ -24,6 +24,8 @@ public class AccountDTO extends BaseDTO {
 	public void setCredit(int credit) {
 		this.credit = credit;
 	}
-	
+	public void subCredit(int subCredit) {
+		this.credit -= subCredit;
+	}
 	
 }

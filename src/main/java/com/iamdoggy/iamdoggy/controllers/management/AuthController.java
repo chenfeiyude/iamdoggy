@@ -30,7 +30,7 @@ public class AuthController {
 	
 	/**
 	 * e.g.
-	 * https://localhost/api/auth/login.do
+	 * https://localhost:8080/iamdoggy-0.0.1-SNAPSHOT/api/auth/login.do
 	 * 
 	 * post data e.g.
 	 * 
@@ -56,7 +56,7 @@ public class AuthController {
 	
 	/**
 	 * e.g.
-	 * https://localhost/api/auth/register.do
+	 * https://localhost:8080/iamdoggy-0.0.1-SNAPSHOT/api/auth/register.do
 	 * 
 	 * post data e.g.
 	 * 

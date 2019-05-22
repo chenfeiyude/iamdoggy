@@ -29,6 +29,12 @@ private static Logger logger = LoggerFactory.getLogger(EventController.class.get
 	@Autowired
 	private AuthService authService;
 	
+	/**
+	 * http://localhost:8080/iamdoggy-0.0.1-SNAPSHOT/api/event/find_random_dog
+	 * @param request
+	 * @return
+	 * @throws NotFoundException
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/find_random_dog")
     public DogDTO findRandomDog(HttpServletRequest request) throws NotFoundException {
 		UserDTO userDTO = authService.getUserFromSession(request);

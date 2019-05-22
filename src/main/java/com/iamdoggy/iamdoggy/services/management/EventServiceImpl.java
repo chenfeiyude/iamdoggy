@@ -61,6 +61,8 @@ public class EventServiceImpl implements EventService {
 		dogDTO = new DogDTO(userDTO, dogBreedConfigureDTO);
 		dogJpaDAO.save(dogDTO);
 		
+		accountDTO.subCredit(MiscConfigure.DEFAULT_FIND_DOG_COST);
+		accountJpaDAO.save(accountDTO);
 		return dogDTO;
 	}
 
