@@ -4,9 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.http.auth.AuthenticationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -22,8 +23,8 @@ import com.iamdoggy.iamdoggy.models.request.AuthUser;
 @RestController
 @RequestMapping(value="/api/auth")
 @Validated
+@Slf4j
 public class AuthController {
-	private static Logger logger = LoggerFactory.getLogger(AuthController.class.getName());
 	
 	@Autowired
 	private AuthService authService;
@@ -48,8 +49,8 @@ public class AuthController {
 		HttpSession session = request.getSession(true);	
 		session.setAttribute("username", userDTO.getUsername());
 		session.setAttribute("token", userDTO.getToken());
-		logger.info(session.getId() + "????????????????/");
-		logger.info("Found public user " + userDTO.getUsername() + " with token: " + userDTO.getToken());
+		log.info(session.getId() + "????????????????/");
+		log.info("Found public user " + userDTO.getUsername() + " with token: " + userDTO.getToken());
 		
 		return userDTO;
 	}

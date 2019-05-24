@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.auth.AuthenticationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
@@ -27,9 +27,9 @@ import com.iamdoggy.iamdoggy.interfaces.management.AuthService;
 
 @Service("authService")
 @Transactional
+@Slf4j
 public class AuthServiceImpl implements AuthService {
-	private static Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class.getName());
-	
+
 	public class Credentials {
 		
 		public static final String KEY_API_KEY = "api-key";
@@ -109,11 +109,11 @@ public class AuthServiceImpl implements AuthService {
 			String token = request.getHeader(Credentials.KEY_TOKEN);
 			String username = request.getHeader(Credentials.KEY_USERNAME);
 			if (token != null && username != null) {
-				logger.info("User: " +username+ " token = "+token+" connects from IP: "+ip);
+				log.info("User: " +username+ " token = "+token+" connects from IP: "+ip);
 			}
 			return validateTokenUser(username, token, request);
 		}
-		logger.info("User: "+cred.getLogin()+" connects from IP: "+ip);
+		log.info("User: "+cred.getLogin()+" connects from IP: "+ip);
 		return validateLiveUser(cred);
 	}
 	
@@ -129,17 +129,17 @@ public class AuthServiceImpl implements AuthService {
 		UserDTO user = userJpaDAO.findByUsername(username);
 		if (user == null || !user.isLive())
 		{
-			logger.error("validateLiveUser: Username "+username+" is disabled or couldn't be found in DB");
+			log.error("validateLiveUser: Username "+username+" is disabled or couldn't be found in DB");
 			return null;
 		}
 		
 		if (!passwordEncoder.matches(cred.getPassword(), user.getPassword()))
 		{
-			logger.info("validateLiveUser received incorrect password for: "+username);
+			log.info("validateLiveUser received incorrect password for: "+username);
 			return null;
 		}
 		
-		logger.info("validateLiveUser Authenticated: "+username);
+		log.info("validateLiveUser Authenticated: "+username);
 		return user;
 	}
 	
@@ -148,23 +148,23 @@ public class AuthServiceImpl implements AuthService {
 			return null;
 		UserDTO user = userJpaDAO.findByUsernameAndToken(username, token);
 		if(user == null) {
-			logger.warn("No user found for username: " + username + " token: " + token);
+			log.warn("No user found for username: " + username + " token: " + token);
 		}
 		else {
 			HttpSession session = request.getSession();
 			if(session!=null)
 			{
-				logger.info(session.getId() + "????????????????/");
+				log.info(session.getId() + "????????????????/");
 				String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
 				String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
 				if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
 					//session timeout or not correct
-					logger.info("sessionUsername:" + sessionUsername);
-					logger.info("sessionToken:" + sessionToken);
+					log.info("sessionUsername:" + sessionUsername);
+					log.info("sessionToken:" + sessionToken);
 					user = null;
 				}
 				else {
-					logger.info("Found user "+user.getUsername()+" with api key "+token);
+					log.info("Found user "+user.getUsername()+" with api key "+token);
 				}
 			}
 			else {
@@ -196,10 +196,10 @@ public class AuthServiceImpl implements AuthService {
 							return new Credentials(login, password);
 						} 
 						else 
-							logger.error("Invalid authentication token");
+							log.error("Invalid authentication token");
 						
 					} catch (UnsupportedEncodingException e) {
-						logger.warn("Couldn't retrieve authentication", e);
+						log.warn("Couldn't retrieve authentication", e);
 					}
 				}
 			}

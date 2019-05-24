@@ -8,8 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,9 +27,9 @@ import com.iamdoggy.iamdoggy.interfaces.management.AuthService;
  *
  */
 @Component
+@Slf4j
 public class IamdoggyAuthenticationFilter extends OncePerRequestFilter {
-	protected static Log logger = LogFactory.getLog(IamdoggyAuthenticationFilter.class.getName());
-	
+
 	@Autowired
 	private AuthService authService;
 

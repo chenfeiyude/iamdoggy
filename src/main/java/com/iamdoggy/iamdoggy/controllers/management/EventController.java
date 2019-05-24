@@ -4,8 +4,8 @@ import javassist.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,8 @@ import com.iamdoggy.iamdoggy.interfaces.management.EventService;
 @RestController
 @RequestMapping(value="/api/event")
 @Validated
+@Slf4j
 public class EventController {
-private static Logger logger = LoggerFactory.getLogger(EventController.class.getName());
 	
 	@Autowired
 	private EventService eventService;
@@ -42,7 +42,7 @@ private static Logger logger = LoggerFactory.getLogger(EventController.class.get
 		if (dogDTO == null) {
 			throw new RuntimeException("No dog found");
 		}
-		logger.info("Found " + dogDTO.getBreed());
+		log.info("Found " + dogDTO.getBreed());
 		return dogDTO;
 	}
 }
