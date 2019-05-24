@@ -5,7 +5,11 @@ Mac start mysql server
 ```
  mysql.server start
 ```
-3. tomcat 9
+3. tomcat 8
 ```
  brew services start tomcat
+```
+4. for testing
+```
+brew install httpie
 ```

@@ -48,9 +48,8 @@ dependencies {
 	compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.8.1'
 	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
 	compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.2' // for error Caused by: java.lang.AbstractMethodError: com.mchange.v2.c3p0.impl.NewProxyConnection.createClob()Ljava/sql/Clob
-	//compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.8.0-alpha2'
-	//compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-alpha2'
-	//compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.8.0-alpha2'
+	compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
