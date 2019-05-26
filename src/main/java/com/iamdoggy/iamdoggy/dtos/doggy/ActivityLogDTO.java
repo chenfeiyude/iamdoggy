@@ -19,6 +19,7 @@ public class ActivityLogDTO extends PetRelatedDTO {
 	public void append(String log) {
 		StringBuilder sb = new StringBuilder(this.log);
 		sb.append(LocalDateTime.now());
+		sb.append("  ");
 		sb.append(log);
 		sb.append("\n");
 		this.log = sb.toString();

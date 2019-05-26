@@ -1,6 +1,8 @@
 package com.iamdoggy.iamdoggy.interfaces.management;
 
+import com.iamdoggy.iamdoggy.dtos.common.PetDTO;
 import com.iamdoggy.iamdoggy.dtos.doggy.DogDTO;
+import com.iamdoggy.iamdoggy.dtos.doggy.EventDTO;
 import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
 
 public interface EventService {
@@ -22,4 +24,6 @@ public interface EventService {
 	 * @return
 	 */
 	DogDTO findRandomDog(UserDTO userDTO);
+	
+	EventDTO getRandomEvent(PetDTO petDTO);
 }

@@ -3,7 +3,6 @@ package com.iamdoggy.iamdoggy.dtos.common;
 import java.time.LocalDateTime;
 
 import javax.persistence.MappedSuperclass;
-
 import lombok.Data;
 
 import com.iamdoggy.iamdoggy.enums.PetHealthyState;

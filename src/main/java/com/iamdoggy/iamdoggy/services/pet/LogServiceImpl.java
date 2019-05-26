@@ -1,5 +1,8 @@
 package com.iamdoggy.iamdoggy.services.pet;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,15 @@ public class LogServiceImpl implements LogService {
 		ActivityLogDTO activityLogDTO = new ActivityLogDTO();
 		activityLogDTO.setPid(petDTO.getId());
 		activityLogJpaDAO.save(activityLogDTO);
+		return activityLogDTO;
+	}
+
+	@Override
+	public ActivityLogDTO getTodayLog(PetDTO petDTO) {
+		ActivityLogDTO activityLogDTO = activityLogJpaDAO.findFirstByPidOrderById(petDTO.getId());
+		if (activityLogDTO == null || !activityLogDTO.getCreated().isEqual(LocalDate.now()) ) {
+			activityLogDTO = generateNewLog(petDTO);
+		}
 		return activityLogDTO;
 	}
 

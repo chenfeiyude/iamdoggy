@@ -13,5 +13,5 @@ import com.iamdoggy.iamdoggy.dtos.common.BaseDTO;
 public class DiseaseConfigureDTO extends BaseDTO {
 	private String type; // cold, cancer
 	private String affect;
-	private double recoveryRate; // 0.1 - 1
+	private double possibility; // 0.1 - 1
 }

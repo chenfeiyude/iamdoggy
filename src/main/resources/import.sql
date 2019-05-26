@@ -13,6 +13,12 @@ insert into command_configure(command, activity, difficulty) values ('stop', 'st
 insert into pet_breed_configure(`type`, breed, rarity, cost) values (0, 'corgi', 0.05, 1000);
 insert into pet_breed_configure(`type`, breed, rarity, cost) values (0, 'husky', 0.5, 300);
 
-
+insert into event_configure(`type`, description, possibility) values (0, 'ill', 0.05);
+insert into event_configure(`type`, description, possibility) values (1, 'hungry', 0.05);
+insert into event_configure(`type`, description, possibility) values (2, 'poo', 0.05);
+insert into event_configure(`type`, description, possibility) values (3, 'pee', 0.05);
+insert into event_configure(`type`, description, possibility) values (4, 'fight', 0.05);
+insert into event_configure(`type`, description, possibility) values (5, 'sleep', 0.05);
+insert into event_configure(`type`, description, possibility) values (6, 'play', 0.05);
 
 
