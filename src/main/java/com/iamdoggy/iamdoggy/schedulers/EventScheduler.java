@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.iamdoggy.iamdoggy.dtos.doggy.DogDTO;
+import com.iamdoggy.iamdoggy.dtos.doggy.EventDTO;
 import com.iamdoggy.iamdoggy.enums.PetState;
 import com.iamdoggy.iamdoggy.interfaces.daos.doggy.DogJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.management.EventService;
@@ -32,7 +33,8 @@ public class EventScheduler {
 		List<DogDTO> dogDTOs = dogJpaDAO.findAllByState(PetState.live, PageRequest.of(page, size));
 		while (!dogDTOs.isEmpty()) {
 			for (DogDTO dogDTO : dogDTOs) {
-				eventService.getRandomEvent(dogDTO);
+				EventDTO eventDTO = eventService.getRandomEvent(dogDTO);
+				eventService.processEvent(dogDTO, eventDTO);
 			}
 			
 			page += 1;

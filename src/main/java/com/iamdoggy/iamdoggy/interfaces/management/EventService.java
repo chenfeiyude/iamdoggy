@@ -26,4 +26,6 @@ public interface EventService {
 	DogDTO findRandomDog(UserDTO userDTO);
 	
 	EventDTO getRandomEvent(PetDTO petDTO);
+	
+	void processEvent(PetDTO petDTO, EventDTO eventDTO);
 }

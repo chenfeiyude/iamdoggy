@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import com.iamdoggy.iamdoggy.interfaces.management.EventService;
 import com.iamdoggy.iamdoggy.interfaces.pet.GeneratorService;
 
 @Service("eventService")
+@Slf4j
 public class EventServiceImpl implements EventService {
 	
 	@Autowired
@@ -95,6 +98,11 @@ public class EventServiceImpl implements EventService {
 		EventDTO eventDTO = dogGeneratorService.generateEvent(petDTO, eventConfigureDTO);
 
 		return eventDTO;
+	}
+
+	@Override
+	public void processEvent(PetDTO petDTO, EventDTO eventDTO) {
+		log.info("Processing pid " + petDTO.getId() + " event " + eventDTO.getType());
 	}
 
 	
