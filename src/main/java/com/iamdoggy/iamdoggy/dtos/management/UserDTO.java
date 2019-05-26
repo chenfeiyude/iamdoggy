@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iamdoggy.iamdoggy.dtos.common.BaseDTO;
 import com.iamdoggy.iamdoggy.enums.UserState;
 
@@ -17,9 +18,11 @@ import com.iamdoggy.iamdoggy.enums.UserState;
 public class UserDTO extends BaseDTO {
     private String uid;
     private String username;
+    @JsonIgnore
     private String password;
     private String token;
     private String state = UserState.invalidate.toString(); // new user is invalidated by default
+    @JsonIgnore
     private String log = "";
     private LocalDateTime lastLogin;
     private LocalDateTime created = LocalDateTime.now();
