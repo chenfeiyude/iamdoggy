@@ -13,12 +13,12 @@ insert into command_configure(command, activity, difficulty) values ('stop', 'st
 insert into pet_breed_configure(`type`, breed, rarity, cost) values (0, 'corgi', 0.05, 1000);
 insert into pet_breed_configure(`type`, breed, rarity, cost) values (0, 'husky', 0.5, 300);
 
-insert into event_configure(`type`, description, possibility) values (0, 'is illed', 0.05);
-insert into event_configure(`type`, description, possibility) values (1, 'is hungried', 0.10);
-insert into event_configure(`type`, description, possibility) values (2, 'poo every where', 0.1);
-insert into event_configure(`type`, description, possibility) values (3, 'pee every where', 0.1);
-insert into event_configure(`type`, description, possibility) values (4, 'fight with other dogs', 0.05);
-insert into event_configure(`type`, description, possibility) values (5, 'is sleeping', 0.20);
-insert into event_configure(`type`, description, possibility) values (6, 'is playing toys', 0.15);
-insert into event_configure(`type`, description, possibility) values (7, 'is relaxing', 0.25);
+insert into event_configure(`type`, description, possibility, persist) values (0, 'is illed', 0.05, true);
+insert into event_configure(`type`, description, possibility, persist) values (1, 'is hungried', 0.10, true);
+insert into event_configure(`type`, description, possibility, persist) values (2, 'poo every where', 0.1, true);
+insert into event_configure(`type`, description, possibility, persist) values (3, 'pee every where', 0.1, true);
+insert into event_configure(`type`, description, possibility, persist) values (4, 'fight with other dogs', 0.05, false);
+insert into event_configure(`type`, description, possibility, persist) values (5, 'is sleeping', 0.20, false);
+insert into event_configure(`type`, description, possibility, persist) values (6, 'is playing toys', 0.15, false);
+insert into event_configure(`type`, description, possibility, persist) values (7, 'is relaxing', 0.25, false);
 

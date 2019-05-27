@@ -1,7 +1,5 @@
 package com.iamdoggy.iamdoggy.services.management;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.iamdoggy.iamdoggy.configurations.MiscConfigure;
 import com.iamdoggy.iamdoggy.dtos.common.PetDTO;
+import com.iamdoggy.iamdoggy.dtos.doggy.ActivityLogDTO;
 import com.iamdoggy.iamdoggy.dtos.doggy.DogDTO;
 import com.iamdoggy.iamdoggy.dtos.doggy.EventDTO;
 import com.iamdoggy.iamdoggy.dtos.management.AccountDTO;
@@ -25,6 +24,8 @@ import com.iamdoggy.iamdoggy.interfaces.daos.management.PetBreedConfigureJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.daos.management.UserJpaDAO;
 import com.iamdoggy.iamdoggy.interfaces.management.EventService;
 import com.iamdoggy.iamdoggy.interfaces.pet.GeneratorService;
+import com.iamdoggy.iamdoggy.interfaces.pet.LogService;
+import com.iamdoggy.iamdoggy.utils.Utils;
 
 @Service("eventService")
 @Slf4j
@@ -43,7 +44,12 @@ public class EventServiceImpl implements EventService {
 	private AccountJpaDAO accountJpaDAO;
 	
 	@Autowired
+	private EventJpaDAO eventJpaDAO;
+	
+	@Autowired
 	private GeneratorService dogGeneratorService;
+	
+	@Autowired LogService logService;
 	
 	@Override
 	public DogDTO findRandomDog(UserDTO userDTO) {
@@ -55,20 +61,10 @@ public class EventServiceImpl implements EventService {
 		}
 		
 		List<PetBreedConfigureDTO> dogBreedConfigureDTOs = petBreedConfigureJpaDAO.findAllByType(PetType.dog);
-		double sumRarity = petBreedConfigureJpaDAO.getSumRarity();
-		Double tempSumRarity = 0d;
-		List<Double> sortProbabilityList = new ArrayList<Double>(dogBreedConfigureDTOs.size());
-		for (PetBreedConfigureDTO dogBreedConfigureDTO : dogBreedConfigureDTOs) {
-			tempSumRarity += dogBreedConfigureDTO.getRarity();
-			sortProbabilityList.add(tempSumRarity/sumRarity);
-		}
 		
-		double randomDouble = Math.random();
-		sortProbabilityList.add(randomDouble);
+		int index = Utils.getRandomPossibility(dogBreedConfigureDTOs);
 		
-		Collections.sort(sortProbabilityList);
-		int breedIndex = sortProbabilityList.indexOf(randomDouble);
-		PetBreedConfigureDTO dogBreedConfigureDTO = dogBreedConfigureDTOs.get(breedIndex);
+		PetBreedConfigureDTO dogBreedConfigureDTO = dogBreedConfigureDTOs.get(index);
 		
 		dogDTO = (DogDTO) dogGeneratorService.generatePet(dogBreedConfigureDTO, userDTO);
 
@@ -80,29 +76,22 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public EventDTO getRandomEvent(PetDTO petDTO) {
 		List<EventConfigureDTO> eventConfigureDTOs = eventConfigureJpaDAO.findAll();
-		double sumPossibility = eventConfigureJpaDAO.getSumPossibility();
-		Double tempSumPossibility = 0d;
-		List<Double> sortProbabilityList = new ArrayList<Double>(eventConfigureDTOs.size());
-		for (EventConfigureDTO eventConfigureDTO : eventConfigureDTOs) {
-			tempSumPossibility += eventConfigureDTO.getPossibility();
-			sortProbabilityList.add(tempSumPossibility/sumPossibility);
-		}
-		
-		double randomDouble = Math.random();
-		sortProbabilityList.add(randomDouble);
-		
-		Collections.sort(sortProbabilityList);
-		int index = sortProbabilityList.indexOf(randomDouble);
+		int index = Utils.getRandomPossibility(eventConfigureDTOs);
 		EventConfigureDTO eventConfigureDTO = eventConfigureDTOs.get(index);
 		
-		EventDTO eventDTO = dogGeneratorService.generateEvent(petDTO, eventConfigureDTO);
-
+		EventDTO eventDTO = new EventDTO(petDTO, eventConfigureDTO);
+		if (eventConfigureDTO.isPersist()) {
+			eventJpaDAO.save(eventDTO);
+		}
 		return eventDTO;
 	}
 
 	@Override
 	public void processEvent(PetDTO petDTO, EventDTO eventDTO) {
 		log.info("Processing pid " + petDTO.getId() + " event " + eventDTO.getType());
+		
+		ActivityLogDTO activityLogDTO = logService.getTodayLog(petDTO);
+		logService.appendLog(activityLogDTO, eventDTO.toString());
 	}
 
 	

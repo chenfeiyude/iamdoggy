@@ -7,13 +7,14 @@ import lombok.Data;
 
 import com.iamdoggy.iamdoggy.dtos.common.BaseDTO;
 import com.iamdoggy.iamdoggy.enums.EventType;
+import com.iamdoggy.iamdoggy.interfaces.management.Possibililty;
 
 @Entity
 @Table(name ="event_configure")
 @Data
-public class EventConfigureDTO extends BaseDTO {
+public class EventConfigureDTO extends BaseDTO implements Possibililty {
 	private EventType type; 
 	private String description; 
 	private double possibility; // 0.01 - 1
-
+	private boolean persist;
 }

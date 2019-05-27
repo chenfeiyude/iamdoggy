@@ -8,5 +8,4 @@ import com.iamdoggy.iamdoggy.dtos.management.UserDTO;
 
 public interface GeneratorService {
 	PetDTO generatePet(PetBreedConfigureDTO petBreedConfigureDTO, UserDTO userDTO);
-	EventDTO generateEvent(PetDTO petDTO, EventConfigureDTO eventConfigureDTO);
 }
