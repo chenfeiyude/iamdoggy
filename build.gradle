@@ -49,6 +49,7 @@ dependencies {
 	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
 	compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.2' // for error Caused by: java.lang.AbstractMethodError: com.mchange.v2.c3p0.impl.NewProxyConnection.createClob()Ljava/sql/Clob
 	compileOnly 'org.projectlombok:lombok:1.18.8'
+	compile 'org.apache.maven.plugins:maven-compiler-plugin:3.8.1'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
