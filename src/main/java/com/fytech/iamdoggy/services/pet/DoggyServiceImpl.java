@@ -17,9 +17,11 @@ public class DoggyServiceImpl implements DoggyService {
 
 	@Override
 	public DogDTO getDog(UserDTO userDTO, long pid) {
-		Optional<DogDTO> dogDTO = dogJpaDAO.findById(pid);
-		if (dogDTO.isPresent() && dogDTO.get().getUid().equals(userDTO.getUid())) {
-			return dogDTO.get();
+		if (userDTO != null) {
+			Optional<DogDTO> dogDTO = dogJpaDAO.findById(pid);
+			if (dogDTO.isPresent() && dogDTO.get().getUid().equals(userDTO.getUid())) {
+				return dogDTO.get();
+			}
 		}
 		return null;
 	}

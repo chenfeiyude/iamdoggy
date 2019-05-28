@@ -152,24 +152,23 @@ public class AuthServiceImpl implements AuthService {
 		}
 		else {
 			HttpSession session = request.getSession();
-			if(session!=null)
-			{
-				log.info(session.getId() + "????????????????/");
-				String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
-				String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
+
+			String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
+			String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
+			if (!StringUtils.isEmpty(sessionUsername) && !StringUtils.isEmpty(sessionToken)) {
 				if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
-					//session timeout or not correct
+					//session not correct
 					log.info("sessionUsername:" + sessionUsername);
 					log.info("sessionToken:" + sessionToken);
 					user = null;
 				}
-				else {
-					log.info("Found user "+user.getUsername()+" with api key "+token);
-				}
 			}
 			else {
-				user = null;
+				// reset into session
+				session.setAttribute(Credentials.KEY_USERNAME, user.getUsername());
+				session.setAttribute(Credentials.KEY_TOKEN, user.getToken());
 			}
+			log.info("Found user "+user.getUsername()+" with api key "+token);
 		}
 		return user;
 	}
