@@ -15,13 +15,18 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fytech.iamdoggy.dtos.doggy.DogDTO;
+import com.fytech.iamdoggy.dtos.doggy.EventDTO;
 import com.fytech.iamdoggy.dtos.management.AccountDTO;
+import com.fytech.iamdoggy.dtos.management.EventConfigureDTO;
 import com.fytech.iamdoggy.dtos.management.PetBreedConfigureDTO;
 import com.fytech.iamdoggy.dtos.management.UserDTO;
+import com.fytech.iamdoggy.enums.EventLevel;
+import com.fytech.iamdoggy.enums.EventType;
 import com.fytech.iamdoggy.enums.PetHealthyState;
 import com.fytech.iamdoggy.enums.PetState;
 import com.fytech.iamdoggy.enums.PetType;
 import com.fytech.iamdoggy.interfaces.daos.management.AccountJpaDAO;
+import com.fytech.iamdoggy.interfaces.daos.management.EventConfigureJpaDAO;
 import com.fytech.iamdoggy.interfaces.daos.management.PetBreedConfigureJpaDAO;
 import com.fytech.iamdoggy.interfaces.management.EventService;
 
@@ -35,6 +40,9 @@ public class EventServiceTest {
 	@MockBean
 	private PetBreedConfigureJpaDAO dogBreedConfigureJpaDAO;
 	
+	@MockBean
+	private EventConfigureJpaDAO eventConfigureJpaDAO;
+	
 	@Autowired
 	private EventService eventService;
 	
@@ -42,6 +50,9 @@ public class EventServiceTest {
 	private UserDTO userDTO2; // does not have enough credit
 	private AccountDTO accountDTO;
 	private List<PetBreedConfigureDTO> dogBreedConfigureDTOs;
+	private DogDTO dogDTO;
+	private List<EventConfigureDTO> eventConfigureDTOs;
+	
 	@Before
 	public void setUp() throws Exception {		
 		userDTO = new UserDTO();
@@ -69,6 +80,16 @@ public class EventServiceTest {
 		dogBreedConfigureDTO.setRarity(0.50);
 		dogBreedConfigureDTOs.add(dogBreedConfigureDTO);
 		Mockito.when(dogBreedConfigureJpaDAO.findAllByType(PetType.dog)).thenReturn(dogBreedConfigureDTOs);
+		
+		dogDTO = new DogDTO(userDTO, dogBreedConfigureDTO);
+		dogDTO.setId(1l);
+		eventConfigureDTOs = new ArrayList<>();
+		EventConfigureDTO eventConfigureDTO = new EventConfigureDTO();
+		eventConfigureDTO.setPersist(false);
+		eventConfigureDTO.setPossibility(0.50);
+		eventConfigureDTO.setType(EventType.sleep);
+		eventConfigureDTOs.add(eventConfigureDTO);
+		Mockito.when(eventConfigureJpaDAO.findAll()).thenReturn(eventConfigureDTOs);
 	}
 	
 	@Test
@@ -83,5 +104,14 @@ public class EventServiceTest {
 	public void findRandomDogFailed() {
 		DogDTO dogDTO = eventService.findRandomDog(userDTO2);
 		assertNull(dogDTO);
+	}
+	
+	@Test
+	public void getRandomEventSuccess() {
+		EventDTO eventDTO = eventService.getRandomEvent(dogDTO);
+		assertNotNull(eventDTO);
+		assertEquals(dogDTO.getId().longValue(), eventDTO.getPid());
+		assertEquals(EventLevel.low, eventDTO.getLevel());
+		assertEquals(EventType.sleep, eventDTO.getType());
 	}
 }
