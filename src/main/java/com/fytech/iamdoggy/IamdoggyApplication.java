@@ -20,6 +20,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
@@ -34,11 +36,14 @@ public class IamdoggyApplication implements ServletContextListener {
 	@Autowired
 	private SessionFactory managementSessionFactory;
 	
+	/**
+	 * Keep timezone consistency between java app and database
+	 */
 	@PostConstruct
     void started() {
       TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
-	
+    
 	public static void main(String[] args) {
 		SpringApplication.run(IamdoggyApplication.class, args);
 	}
@@ -61,4 +66,14 @@ public class IamdoggyApplication implements ServletContextListener {
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
+	
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**").allowedOrigins("http://localhost:8081");
+            }
+        };
+    }
 }

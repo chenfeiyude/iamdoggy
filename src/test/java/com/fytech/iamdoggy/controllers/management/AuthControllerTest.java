@@ -35,7 +35,7 @@ public class AuthControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		authUser = new AuthUser();
-		authUser.setUsername("feiyu");
+		authUser.setUsername("chenfeiyu0402@gmail.com");
 		authUser.setPassword("123");
 		
 		userDTO = new UserDTO();

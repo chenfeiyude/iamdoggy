@@ -10,6 +10,7 @@ import org.apache.http.auth.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.fytech.iamdoggy.dtos.management.UserDTO;
 import com.fytech.iamdoggy.interfaces.management.AuthService;
 import com.fytech.iamdoggy.models.request.AuthUser;
 
+//@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600)
 @RestController
 @RequestMapping(value="/api/auth")
 @Validated

@@ -35,19 +35,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
          ;   
 	}
 
-	 @Override
-	 public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		 auth.authenticationProvider(iamdoggyAuthenticationProvider);
-	 }
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(iamdoggyAuthenticationProvider);
+	}
 	 
-	 @Override
-		public void configure(WebSecurity web) throws Exception {
-		    web.ignoring().antMatchers(
-		    		"/api/auth/**",
-		    		"/api/auth/login**", 
-		    		"/api/auth/register**"
-		    		)
-		    		;
-		}
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	    web.ignoring().antMatchers(
+	    		"/api/auth/**",
+	    		"/api/auth/login**", 
+	    		"/api/auth/register**"
+	    		);
+	}
 
 }

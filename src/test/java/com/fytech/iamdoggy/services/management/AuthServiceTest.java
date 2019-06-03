@@ -22,7 +22,7 @@ public class AuthServiceTest {
 	
 	@Test
 	public void loginPass() throws AuthenticationException {
-		UserDTO userDTO = authService.login("feiyu", "123");
+		UserDTO userDTO = authService.login("chenfeiyu0402@gmail.com", "123");
 		assertNotNull(userDTO);
 		assertEquals(UserState.live.toString(), userDTO.getState());
 	}
