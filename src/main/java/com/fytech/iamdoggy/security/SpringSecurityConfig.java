@@ -28,7 +28,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		// only apply new filter to the new spring api urls
 		http.antMatcher("/api/**");
 			
-		http.csrf().disable().authorizeRequests()
+		http.cors().and()
+			.authorizeRequests()
 			.antMatchers("/api/**").authenticated()
 			.and().httpBasic().authenticationEntryPoint(authEntryPoint)
 			.and().addFilterBefore(iamdoggyAuthenticationFilter, BasicAuthenticationFilter.class)

@@ -17,6 +17,7 @@ import com.fytech.iamdoggy.dtos.management.UserDTO;
 import com.fytech.iamdoggy.interfaces.management.AuthService;
 import com.fytech.iamdoggy.interfaces.management.EventService;
 
+//@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600)
 @RestController
 @RequestMapping(value="/api/event")
 @Validated
