@@ -45,13 +45,18 @@ public class DoggyController {
 	 */
 	@RequestMapping(method=RequestMethod.GET, value="/activity_log/get")
     public ActivityLogDTO getActivityLog(HttpServletRequest request, 
-    									@RequestParam(name="pid") long pid) throws NotFoundException {
+    									@RequestParam(name="pid") long pid,
+    									@RequestParam(name="limit", required=false) int limit) throws NotFoundException {
 		UserDTO userDTO = authService.getUserFromSession(request);
 		DogDTO dogDTO = doggyService.getDog(userDTO, pid);
 		if (dogDTO == null) {
 			throw new IllegalArgumentException("Invalid pid");
 		}
 		ActivityLogDTO activityLogDTO = logService.getTodayLog(dogDTO);
+		if (limit > 0) {
+			// get latest ones
+			logService.limitLatestLogs(activityLogDTO, limit);
+		}
 		return activityLogDTO;
 	}
 	

@@ -1,7 +1,6 @@
 package com.fytech.iamdoggy.services.pet;
 
 import java.time.LocalDate;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,21 @@ public class LogServiceImpl implements LogService {
 			activityLogDTO = generateNewLog(petDTO);
 		}
 		return activityLogDTO;
+	}
+
+	@Override
+	public void limitLatestLogs(ActivityLogDTO activityLogDTO, int limit) {
+		if (activityLogDTO == null || limit <= 0) {
+			return;
+		}
+		String[] logLines = activityLogDTO.getLog().split("\n");
+		log.info(logLines.toString());
+		StringBuilder sBuilder = new StringBuilder();
+		int start = logLines.length > limit? logLines.length - limit : 0;
+		for (int i = logLines.length - 1; i >= start; i--) {
+			sBuilder.append(logLines[i] + "\n");
+		}
+		activityLogDTO.setLog(sBuilder.toString());
 	}
 
 }

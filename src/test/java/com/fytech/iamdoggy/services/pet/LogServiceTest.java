@@ -50,7 +50,7 @@ public class LogServiceTest {
 		activityLogDTO = new ActivityLogDTO();
 		activityLogDTO.setId(1l);
 		activityLogDTO.setPid(dogDTO.getId());
-		
+		activityLogDTO.setLog("test1\ntest2\ntest3\ntest4\ntest5\ntest6\ntest7\n");
 	}
 	
 	@Test
@@ -77,5 +77,15 @@ public class LogServiceTest {
 		assertEquals(todayActivityLogDTO.getId(), todayActivityLogDTO2.getId());
 		assertNull(logService.getTodayLog(null));
 		
+	}
+	
+	@Test
+	public void limitLatestLogs() {
+		ActivityLogDTO tempActivityLogDTO = new ActivityLogDTO();
+		tempActivityLogDTO.setLog(activityLogDTO.getLog());
+		logService.limitLatestLogs(tempActivityLogDTO, 2);
+		assertNotNull(tempActivityLogDTO.getLog());
+		assertNotEquals(activityLogDTO.getLog(), tempActivityLogDTO.getLog());
+		assertEquals("test7\ntest6\n", tempActivityLogDTO.getLog());
 	}
 }
