@@ -1,5 +1,7 @@
 package com.fytech.iamdoggy.controllers.pet;
 
+import java.util.List;
+
 import javassist.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +44,7 @@ public class DoggyController {
 	 * @throws NotFoundException
 	 */
 	@RequestMapping(method=RequestMethod.GET, value="/activity_log/get")
-    public ActivityLogDTO findRandomDog(HttpServletRequest request, 
+    public ActivityLogDTO getActivityLog(HttpServletRequest request, 
     									@RequestParam(name="pid") long pid) throws NotFoundException {
 		UserDTO userDTO = authService.getUserFromSession(request);
 		DogDTO dogDTO = doggyService.getDog(userDTO, pid);
@@ -51,5 +53,12 @@ public class DoggyController {
 		}
 		ActivityLogDTO activityLogDTO = logService.getTodayLog(dogDTO);
 		return activityLogDTO;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/dogs/get")
+    public List<DogDTO> getDogs(HttpServletRequest request) {
+		UserDTO userDTO = authService.getUserFromSession(request);
+		List<DogDTO> dogDTOs = doggyService.getDogs(userDTO);
+		return dogDTOs;
 	}
 }

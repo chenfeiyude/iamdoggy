@@ -12,4 +12,6 @@ import com.fytech.iamdoggy.enums.PetState;
 @Repository("dogJpaDAO")
 public interface DogJpaDAO  extends JpaRepository<DogDTO, Long> {
 	List<DogDTO> findAllByState(PetState state, Pageable pageable);
+	List<DogDTO> findAllByUid(String uid);
+	
 }

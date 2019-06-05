@@ -1,5 +1,7 @@
 package com.fytech.iamdoggy.services.pet;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,15 @@ public class DoggyServiceImpl implements DoggyService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<DogDTO> getDogs(UserDTO userDTO) {
+		List<DogDTO> dogDTOs = Collections.emptyList();
+		if (userDTO != null) {
+			dogDTOs = dogJpaDAO.findAllByUid(userDTO.getUid());
+		}
+		return dogDTOs;
 	}
 	
 	
