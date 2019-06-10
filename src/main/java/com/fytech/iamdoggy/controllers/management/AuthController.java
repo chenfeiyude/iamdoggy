@@ -10,7 +10,6 @@ import org.apache.http.auth.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,5 +74,13 @@ public class AuthController {
     public void register(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws IllegalArgumentException {
 		UserDTO userDTO = authService.register(authUser.getUsername(), authUser.getPassword());
 		
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/logout")
+    public void logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
 	}
 }

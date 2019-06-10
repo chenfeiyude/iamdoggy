@@ -58,10 +58,9 @@ public class LogServiceImpl implements LogService {
 			return;
 		}
 		String[] logLines = activityLogDTO.getLog().split("\n");
-		log.info(logLines.toString());
 		StringBuilder sBuilder = new StringBuilder();
-		int start = logLines.length > limit? logLines.length - limit : 0;
-		for (int i = logLines.length - 1; i >= start; i--) {
+		int end = Math.min(logLines.length, limit);
+		for (int i = 0; i < end; i++) {
 			sBuilder.append(logLines[i] + "\n");
 		}
 		activityLogDTO.setLog(sBuilder.toString());

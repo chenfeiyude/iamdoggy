@@ -26,11 +26,12 @@ public class ActivityLogDTO extends PetRelatedDTO {
 			return;
 		}
 		
-		StringBuilder sb = new StringBuilder(this.log);
+		StringBuilder sb = new StringBuilder();
 		sb.append(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		sb.append("  ");
 		sb.append(log);
 		sb.append("\n");
+		sb.append(this.log);
 		this.log = sb.toString();
 	}
 }

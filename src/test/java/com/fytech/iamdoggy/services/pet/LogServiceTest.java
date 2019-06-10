@@ -86,6 +86,6 @@ public class LogServiceTest {
 		logService.limitLatestLogs(tempActivityLogDTO, 2);
 		assertNotNull(tempActivityLogDTO.getLog());
 		assertNotEquals(activityLogDTO.getLog(), tempActivityLogDTO.getLog());
-		assertEquals("test7\ntest6\n", tempActivityLogDTO.getLog());
+		assertEquals("test1\ntest2\n", tempActivityLogDTO.getLog());
 	}
 }
