@@ -224,6 +224,13 @@ public class AuthServiceImpl implements AuthService {
 		
 		return userDTO;
 	}
+
+	@Override
+	public boolean checkEmail(String username) {
+		UserDTO userDTO = userJpaDAO.findByUsername(username);
+		
+		return userDTO != null && userDTO.isLive();
+	}
 	
 	
 }

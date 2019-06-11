@@ -1,5 +1,8 @@
 package com.fytech.iamdoggy.controllers.management;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -13,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fytech.iamdoggy.dtos.management.UserDTO;
@@ -49,7 +53,6 @@ public class AuthController {
 		HttpSession session = request.getSession(true);	
 		session.setAttribute("username", userDTO.getUsername());
 		session.setAttribute("token", userDTO.getToken());
-		log.info(session.getId() + "????????????????/");
 		log.info("Found public user " + userDTO.getUsername() + " with token: " + userDTO.getToken());
 		
 		return userDTO;
@@ -69,11 +72,21 @@ public class AuthController {
 	 * @param authUser
 	 * @param request
 	 * @throws IllegalArgumentException
+	 * @throws AuthenticationException 
 	 */
 	@RequestMapping(method=RequestMethod.POST, value="/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void register(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws IllegalArgumentException {
-		UserDTO userDTO = authService.register(authUser.getUsername(), authUser.getPassword());
-		
+    public UserDTO register(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws IllegalArgumentException, AuthenticationException {
+		authService.register(authUser.getUsername(), authUser.getPassword());
+		// TODO add validate email later
+		return login(authUser, request);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/check_email")
+    public Map<String, Object> check_email(@RequestParam("username") String username, HttpServletRequest request) throws IllegalArgumentException {
+		boolean exist = authService.checkEmail(username);
+		Map<String, Object> response = new HashMap<>();
+		response.put("exist", exist);
+		return response;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/logout")
