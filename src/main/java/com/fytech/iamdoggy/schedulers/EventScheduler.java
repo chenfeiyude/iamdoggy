@@ -25,7 +25,7 @@ public class EventScheduler {
 	@Autowired
 	private EventService eventService;
 	
-	@Scheduled(fixedRate=60*1000, initialDelay=60*1000)
+//	@Scheduled(fixedRate=60*1000, initialDelay=60*1000)
 	public void randomEvents() {
 		log.info("randomEvents schedule running..............................");
 		int page = 0;

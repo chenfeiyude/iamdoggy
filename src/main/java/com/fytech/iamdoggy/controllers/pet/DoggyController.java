@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fytech.iamdoggy.dtos.doggy.ActivityLogDTO;
 import com.fytech.iamdoggy.dtos.doggy.DogDTO;
+import com.fytech.iamdoggy.dtos.doggy.EventDTO;
 import com.fytech.iamdoggy.dtos.management.UserDTO;
 import com.fytech.iamdoggy.interfaces.management.AuthService;
+import com.fytech.iamdoggy.interfaces.management.EventService;
 import com.fytech.iamdoggy.interfaces.pet.DoggyService;
 import com.fytech.iamdoggy.interfaces.pet.LogService;
 
@@ -35,6 +37,9 @@ public class DoggyController {
 	private LogService logService;
 	
 	@Autowired
+	private EventService eventService;
+	
+	@Autowired
 	private DoggyService doggyService;
 	
 	/**
@@ -43,8 +48,8 @@ public class DoggyController {
 	 * @return
 	 * @throws NotFoundException
 	 */
-	@RequestMapping(method=RequestMethod.GET, value="/activity_log/get")
-    public ActivityLogDTO getActivityLog(HttpServletRequest request, 
+	@RequestMapping(method=RequestMethod.GET, value="/activity/get")
+    public ActivityLogDTO getActivity(HttpServletRequest request, 
     									@RequestParam(name="pid") long pid,
     									@RequestParam(name="limit", required=false) int limit) throws NotFoundException {
 		UserDTO userDTO = authService.getUserFromSession(request);
@@ -57,6 +62,22 @@ public class DoggyController {
 			// get latest ones
 			logService.limitLatestLogs(activityLogDTO, limit);
 		}
+		return activityLogDTO;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/activity/generate")
+    public ActivityLogDTO generateActivity(HttpServletRequest request, 
+    									@RequestParam(name="pid") long pid) throws NotFoundException {
+		UserDTO userDTO = authService.getUserFromSession(request);
+		DogDTO dogDTO = doggyService.getDog(userDTO, pid);
+		if (dogDTO == null) {
+			throw new IllegalArgumentException("Invalid pid");
+		}
+		
+		EventDTO eventDTO = eventService.getRandomEvent(dogDTO);
+		eventService.processEvent(dogDTO, eventDTO);
+		
+		ActivityLogDTO activityLogDTO = logService.getTodayLog(dogDTO);
 		return activityLogDTO;
 	}
 	
