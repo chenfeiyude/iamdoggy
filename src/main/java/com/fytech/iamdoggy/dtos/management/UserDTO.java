@@ -16,7 +16,7 @@ import com.fytech.iamdoggy.enums.UserState;
 @Table(name ="user")
 @Data
 public class UserDTO extends BaseDTO {
-    private String uid;
+    private String uid = UUID.randomUUID().toString();;
     private String username;
     @JsonIgnore
     private String password;
