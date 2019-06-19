@@ -12,6 +12,9 @@ gradle build
 build without junit test
 gradle clean build -x test
 
+build with docker
+gradle clean build buildDocker
+
 3. Setting up ide with gradle configure:
 gradle cleanEclipse eclipse
 
@@ -21,6 +24,19 @@ gradle dependencies
 gradle dependencies --configuration runtime
 
 */
+buildscript {
+	ext {
+        springBootVersion = '2.1.4.RELEASE'
+    }
+    
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:1.2")
+    }
+}
 
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
@@ -30,6 +46,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
 
 group = 'com.iamdoggy'
 version = '0.0.1-SNAPSHOT'
@@ -59,4 +76,21 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+jar {
+    baseName = 'iamdoggy-docker'
+    version =  '0.0.1'
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+  	push = false
+  	applicationName = jar.baseName
+  	dockerfile = file('Dockerfile')
+  	doFirst {
+    	copy {
+	      	from war
+	      	into "build/docker/target"
+    	}
+  	}
 }

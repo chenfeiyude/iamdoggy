@@ -1,0 +1,45 @@
+version: '3'
+services:
+  nginx:
+   container_name: iamdoggy-nginx
+   image: nginx:1.13
+   restart: always
+   ports:
+   - 80:80
+   - 443:443
+   volumes:
+   - ./nginx/conf.d:/etc/nginx/conf.d
+   depends_on:
+   - app
+ 
+  management_mysql:
+   container_name: management-mysql
+   image: mysql/mysql-server:5.7
+   environment:
+    MYSQL_DATABASE: management
+    MYSQL_ROOT_PASSWORD: iamdoggy
+    MYSQL_ROOT_HOST: '%'
+   ports:
+   - "3306:3306"
+   restart: always
+  
+  doggy_mysql:
+   container_name: doggy-mysql
+   image: mysql/mysql-server:5.7
+   environment:
+    MYSQL_DATABASE: doggy
+    MYSQL_ROOT_PASSWORD: iamdoggy
+    MYSQL_ROOT_HOST: '%'
+   ports:
+   - "3306:3306"
+   restart: always
+   
+  app:
+    restart: always
+    build: .
+    expose:
+      - "8080"
+    command: gradle clean build
+    depends_on:
+      - management_mysql
+      - doggy_mysql

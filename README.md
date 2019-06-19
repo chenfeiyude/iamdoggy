@@ -27,3 +27,21 @@ java -jar lombok.jar;
 brew install httpie
 ```
 
+
+# Build
+build to war and deployed to docker container
+
+## Build project 
+gradle clean build
+
+## Build docker image (from gradle) 
+gradle clean build buildDocker
+
+## Run docker locally
+docker run -p 8080:8080 -t com.iamdoggy/iamdoggy-docker:0.0.1-SNAPSHOT
+
+## Stop docker 
+docker stop com.iamdoggy/iamdoggy-docker:0.0.1-SNAPSHOT
+
+
+
