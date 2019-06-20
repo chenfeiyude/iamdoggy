@@ -20,6 +20,7 @@ services:
      - MYSQL_USER=iamdoggy
      - MYSQL_PASSWORD=iamdoggy
      - MYSQL_ROOT_PASSWORD=fytech
+     - MYSQL_ROOT_HOST='%'
    restart: always
   
   doggy_mysql:
@@ -30,6 +31,7 @@ services:
      - MYSQL_USER=iamdoggy
      - MYSQL_PASSWORD=iamdoggy
      - MYSQL_ROOT_PASSWORD=fytech
+     - MYSQL_ROOT_HOST='%'
    restart: always
    
   app:
@@ -49,8 +51,10 @@ services:
       - management.datasource.username=iamdoggy
       - management.datasource.password=iamdoggy
       - management.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+    ports:
+      - 8080:8080
     expose:
-      - "8080"
+      - 8080
     depends_on:
       - management_mysql
       - doggy_mysql
