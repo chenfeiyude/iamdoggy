@@ -1,42 +1,54 @@
 version: '3'
 services:
   nginx:
-   container_name: iamdoggy-nginx
+   container_name: iamdoggy_nginx
    image: nginx:1.13
    restart: always
    ports:
-   - 80:80
-   - 443:443
+     - 8000:80
+     - 443:443
    volumes:
-   - ./nginx/conf.d:/etc/nginx/conf.d
+     - ./nginx/conf.d:/etc/nginx/conf.d
    depends_on:
-   - app
+     - app
  
   management_mysql:
-   container_name: management-mysql
+   container_name: management_mysql
    image: mysql/mysql-server:5.7
    environment:
-    MYSQL_DATABASE: management
-    MYSQL_ROOT_PASSWORD: iamdoggy
-    MYSQL_ROOT_HOST: '%'
-   ports:
-   - "3307:3306"
+     - MYSQL_DATABASE=management
+     - MYSQL_USER=iamdoggy
+     - MYSQL_PASSWORD=iamdoggy
+     - MYSQL_ROOT_PASSWORD=fytech
    restart: always
   
   doggy_mysql:
-   container_name: doggy-mysql
+   container_name: doggy_mysql
    image: mysql/mysql-server:5.7
    environment:
-    MYSQL_DATABASE: doggy
-    MYSQL_ROOT_PASSWORD: iamdoggy
-    MYSQL_ROOT_HOST: '%'
-   ports:
-   - "3306:3306"
+     - MYSQL_DATABASE=doggy
+     - MYSQL_USER=iamdoggy
+     - MYSQL_PASSWORD=iamdoggy
+     - MYSQL_ROOT_PASSWORD=fytech
    restart: always
    
   app:
+    container_name: iamdoggy_app
     restart: always
     build: .
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ~/.m2:/root/.m2
+    environment:
+      - doggy.datasource.url=jdbc:mysql://doggy_mysql:3306/doggy?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false&allowPublicKeyRetrieval=true
+      - doggy.datasource.username=iamdoggy
+      - doggy.datasource.password=iamdoggy
+      - doggy.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+      - management.datasource.url=jdbc:mysql://management_mysql:3306/management?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false&allowPublicKeyRetrieval=true
+      - management.datasource.username=iamdoggy
+      - management.datasource.password=iamdoggy
+      - management.datasource.driverClassName=com.mysql.cj.jdbc.Driver
     expose:
       - "8080"
     depends_on:
