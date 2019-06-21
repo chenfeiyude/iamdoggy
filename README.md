@@ -32,16 +32,43 @@ brew install httpie
 build to war and deployed to docker container
 
 ## Build project 
+```
 gradle clean build
+```
 
-## Build docker image (from gradle) 
+## Build docker 
+```
 gradle clean build buildDocker
+```
 
 ## Run docker locally
-docker run -p 8080:8080 -t com.iamdoggy/iamdoggy-docker:0.0.1-SNAPSHOT
+```
+docker-compose up
+```
+
+# Stop and Clean
 
 ## Stop docker 
-docker stop com.iamdoggy/iamdoggy-docker:0.0.1-SNAPSHOT
+```
+docker-compose stop
+```
+
+## Remove docker and volumns
+```
+docker-compose down -v
+```
+
+## Remove image
+```
+docker image ls
+
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
+iamdoggy_iamdoggy_app      latest              868b9adb4f52        20 minutes ago      514MB
+
+
+docker image rm iamdoggy_iamdoggy_app -f
+```
+
 
 
 
