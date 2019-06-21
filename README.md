@@ -18,6 +18,7 @@ java -jar lombok.jar;
 4). Restart IDE and rebuild projects
 
 2. for testing api, using postman or install httpie
+
 ```
 brew install httpie
 ```
@@ -27,16 +28,19 @@ brew install httpie
 build to war and deployed to docker container
 
 ## Build project 
+
 ```
 gradle clean build
 ```
 
 ## Build docker 
+
 ```
 gradle clean build buildDocker
 ```
 
 ## Run docker locally
+
 ```
 docker-compose up
 ```
@@ -44,16 +48,19 @@ docker-compose up
 # Stop and Clean
 
 ## Stop docker 
+
 ```
 docker-compose stop
 ```
 
 ## Remove docker and volumns
+
 ```
 docker-compose down -v
 ```
 
 ## Remove image
+
 ```
 docker image ls
 
