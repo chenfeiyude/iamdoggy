@@ -31,7 +31,7 @@ public class EventController {
 	private AuthService authService;
 	
 	/**
-	 * http://localhost:8080/iamdoggy-0.0.1-SNAPSHOT/api/event/find_random_dog
+	 * api/event/find_random_dog
 	 * @param request
 	 * @return
 	 * @throws NotFoundException

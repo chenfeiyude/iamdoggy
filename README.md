@@ -71,6 +71,12 @@ iamdoggy_iamdoggy_app      latest              868b9adb4f52        20 minutes ag
 docker image rm iamdoggy_iamdoggy_app -f
 ```
 
+# URL
 
+## Running individually
+http://localhost:8080/iamdoggy-0.0.1-SNAPSHOT/
+
+## Running via docker
+http://localhost/main/app/
 
 

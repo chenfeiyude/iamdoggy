@@ -5,12 +5,12 @@ services:
    image: nginx:1.13
    restart: always
    ports:
-     - 8000:80
+     - 80:80
      - 443:443
    volumes:
      - ./nginx/conf.d:/etc/nginx/conf.d
    depends_on:
-     - iamdoggy_app
+     - app
  
   management_mysql:
    container_name: management_mysql
@@ -34,15 +34,13 @@ services:
      - MYSQL_ROOT_HOST=%
    restart: always
    
-  iamdoggy_app:
-    container_name: iamdoggy_app
+  app:
+    container_name: app
     restart: always
     build: ./app
     working_dir: /app
     volumes:
       - ./app:/app
-    ports:
-      - 8080:8080
     expose:
       - 8080
     depends_on:

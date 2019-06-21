@@ -26,6 +26,12 @@ public class ManagementController {
 	@Autowired
 	private AuthService authService;
 	
+	/**
+	 * api/management/account/get
+	 * 
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/account/get")
     public AccountDTO getAccount(HttpServletRequest request) {
 		UserDTO userDTO = authService.getUserFromSession(request);
