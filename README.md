@@ -15,6 +15,7 @@
 ```
 java -jar lombok.jar;
 ```
+4). Restart IDE and rebuild projects
 
 2. for testing api, using postman or install httpie
 ```
