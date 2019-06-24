@@ -41,6 +41,9 @@ services:
     working_dir: /app
     volumes:
       - ./app:/app
+    environment:
+      - management.datasource.url=jdbc:mysql://management_mysql:3306/management?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false&allowPublicKeyRetrieval=true
+      - doggy.datasource.url=jdbc:mysql://doggy_mysql:3306/doggy?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false&allowPublicKeyRetrieval=true
     expose:
       - 8080
     depends_on:

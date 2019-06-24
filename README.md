@@ -68,7 +68,7 @@ docker image rm iamdoggy_iamdoggy_app -f
 # URL
 
 ## Running individually
-http://localhost:8080/iamdoggy-0.0.1-SNAPSHOT/
+http://localhost:8080/app/
 
 ## Running via docker
 http://localhost/main/app/
