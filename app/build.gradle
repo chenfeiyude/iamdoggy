@@ -83,6 +83,10 @@ jar {
     version =  '0.0.1'
 }
 
+bootWar {
+    archiveName 'app.war'
+}
+
 task buildDocker(type: Docker, dependsOn: build) {
   	push = false
   	applicationName = jar.baseName
