@@ -71,6 +71,6 @@ docker image rm iamdoggy_iamdoggy_app -f
 http://localhost:8080/app/
 
 ## Running via docker
-http://localhost/main/app/
+http://localhost/app/
 
 
