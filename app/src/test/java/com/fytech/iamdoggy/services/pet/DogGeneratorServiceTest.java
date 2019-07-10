@@ -52,9 +52,9 @@ public class DogGeneratorServiceTest {
 		assertEquals(dogBreedConfigureDTO.getBreed(), ((DogDTO)petDTO).getBreed());
 		
 		assertEquals(0, petDTO.getLevel());
-		assertTrue(petDTO.getSpeed() < MiscConfigure.MAX_INIT_ABILLITY);
-		assertTrue(petDTO.getAttack() < MiscConfigure.MAX_INIT_ABILLITY);
-		assertTrue(petDTO.getDefence() < MiscConfigure.MAX_INIT_ABILLITY);
+		assertTrue(petDTO.getSpeed() < MiscConfigure.MAX_INIT_ABILITY);
+		assertTrue(petDTO.getAttack() < MiscConfigure.MAX_INIT_ABILITY);
+		assertTrue(petDTO.getDefence() < MiscConfigure.MAX_INIT_ABILITY);
 		
 	}
 }

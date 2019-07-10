@@ -9,6 +9,6 @@ public interface GeneratorService {
 	PetDTO generatePet(PetBreedConfigureDTO petBreedConfigureDTO, UserDTO userDTO);
 	
 	default int getRandomAbility() {
-		return (int) (Math.random() * MiscConfigure.MAX_INIT_ABILLITY);
+		return (int) (Math.random() * MiscConfigure.MAX_INIT_ABILITY);
 	}
 }
