@@ -24,6 +24,14 @@ public class DogGeneratorServiceImpl implements GeneratorService {
 	@Override
 	public PetDTO generatePet(PetBreedConfigureDTO petBreedConfigureDTO, UserDTO userDTO) {
 		DogDTO dogDTO = new DogDTO(userDTO, petBreedConfigureDTO);
+		if (dogJpaDAO.findFirstByUid(userDTO.getUid()) == null) {
+			dogDTO.setPrimary(true);// first one will be default to primary
+		}
+		
+		dogDTO.setSpeed(getRandomAbility());
+		dogDTO.setAttack(getRandomAbility());
+		dogDTO.setDefence(getRandomAbility());
+		
 		dogJpaDAO.save(dogDTO);
 		
 		ActivityLogDTO activityLogDTO = logService.generateNewLog(dogDTO);

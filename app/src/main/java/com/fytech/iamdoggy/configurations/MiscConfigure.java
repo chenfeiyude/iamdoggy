@@ -5,4 +5,6 @@ public class MiscConfigure {
 	
 	public final static int DEFAULT_CREDIT = 1000; // use when new account registered
 	public final static int DEFAULT_FIND_DOG_COST = 600;
+	
+	public final static int MAX_INIT_ABILLITY = 20; // speed, attack, defence
 }

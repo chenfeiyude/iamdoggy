@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fytech.iamdoggy.configurations.MiscConfigure;
 import com.fytech.iamdoggy.dtos.common.PetDTO;
 import com.fytech.iamdoggy.dtos.doggy.DogDTO;
 import com.fytech.iamdoggy.dtos.management.PetBreedConfigureDTO;
@@ -44,10 +45,16 @@ public class DogGeneratorServiceTest {
 	public void generatePet() {
 		PetDTO petDTO = dogGeneratorService.generatePet(dogBreedConfigureDTO, userDTO);
 		assertNotNull(petDTO);
+		assertTrue(petDTO.isPrimary());
 		assertEquals(0, petDTO.getAge());
 		assertEquals(PetState.live, petDTO.getState());
 		assertEquals(DogDTO.class, petDTO.getClass());
 		assertEquals(dogBreedConfigureDTO.getBreed(), ((DogDTO)petDTO).getBreed());
+		
+		assertEquals(0, petDTO.getLevel());
+		assertTrue(petDTO.getSpeed() < MiscConfigure.MAX_INIT_ABILLITY);
+		assertTrue(petDTO.getAttack() < MiscConfigure.MAX_INIT_ABILLITY);
+		assertTrue(petDTO.getDefence() < MiscConfigure.MAX_INIT_ABILLITY);
 		
 	}
 }
