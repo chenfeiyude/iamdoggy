@@ -87,4 +87,14 @@ public class DoggyController {
 		List<DogDTO> dogDTOs = doggyService.getDogs(userDTO);
 		return dogDTOs;
 	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/dogs/get/primary")
+    public DogDTO getPrimaryDog(HttpServletRequest request) {
+		UserDTO userDTO = authService.getUserFromSession(request);
+		DogDTO dogDTO = doggyService.getPrimaryDog(userDTO);
+		if (dogDTO == null) {
+			log.info("No primary found for user");
+		}
+		return dogDTO;
+	}
 }

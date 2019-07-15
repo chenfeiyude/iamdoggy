@@ -72,7 +72,9 @@ public class IamdoggyApplication implements ServletContextListener {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**").allowedOrigins("http://localhost:8081", "http://iamdoggy.com");
+                registry.addMapping("/api/**").allowedOrigins(
+                		"http://localhost:8080", 
+                		"http://iamdoggy.com");
             }
         };
     }

@@ -14,4 +14,5 @@ public interface DogJpaDAO  extends JpaRepository<DogDTO, Long> {
 	List<DogDTO> findAllByState(PetState state, Pageable pageable);
 	List<DogDTO> findAllByUid(String uid);
 	DogDTO findFirstByUid(String uid);
+	DogDTO findByUidAndIsPrimary(String uid, boolean isPrimary);
 }

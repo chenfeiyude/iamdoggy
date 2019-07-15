@@ -45,8 +45,10 @@ public class DoggyServiceTest {
 		
 		dogDTO = Optional.of(new DogDTO(userDTO, dogBreedConfigureDTO)) ;
 		dogDTO.get().setId(1l);
+		dogDTO.get().setPrimary(true);
 		Mockito.when(dogJpaDAO.findById(1l)).thenReturn(dogDTO);
 		
+		Mockito.when(dogJpaDAO.findByUidAndIsPrimary(userDTO.getUid(), true)).thenReturn(dogDTO.get());
 	}
 	
 	@Test
@@ -64,5 +66,12 @@ public class DoggyServiceTest {
 		
 		tempDogDTO = doggyService.getDog(null, 1l);
 		assertNull(tempDogDTO);
+	}
+	
+	@Test
+	public void getPrimaryDog() {
+		DogDTO tempDogDTO = doggyService.getPrimaryDog(userDTO);
+		assertNotNull(tempDogDTO);
+		assertEquals(dogDTO.get().isPrimary(), true);
 	}
 }

@@ -8,4 +8,5 @@ import com.fytech.iamdoggy.dtos.management.UserDTO;
 public interface DoggyService {
 	DogDTO getDog(UserDTO userDTO, long pid);
 	List<DogDTO> getDogs(UserDTO userDTO);
+	DogDTO getPrimaryDog(UserDTO userDTO);
 }
