@@ -10,6 +10,7 @@ import com.fytech.iamdoggy.dtos.management.UserDTO;
 
 public interface AuthService {
 	UserDTO authenticate(HttpServletRequest request);
+	void logout(HttpServletRequest request);
 	UserDTO register(String username, String password);
 	boolean checkEmail(String username);
 	UserDTO login(String username, String password) throws AuthenticationException;

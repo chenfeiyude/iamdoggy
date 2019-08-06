@@ -151,24 +151,24 @@ public class AuthServiceImpl implements AuthService {
 			log.warn("No user found for username: " + username + " token: " + token);
 		}
 		else {
-			HttpSession session = request.getSession();
-
-			String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
-			String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
-			if (!StringUtils.isEmpty(sessionUsername) && !StringUtils.isEmpty(sessionToken)) {
-				if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
-					//session not correct
-					log.info("sessionUsername:" + sessionUsername);
-					log.info("sessionToken:" + sessionToken);
-					user = null;
-				}
+			HttpSession session = request.getSession(false);
+			if (session == null) {
+				log.info("User token has expired");
+				user = null;
 			}
 			else {
-				// reset into session
-				session.setAttribute(Credentials.KEY_USERNAME, user.getUsername());
-				session.setAttribute(Credentials.KEY_TOKEN, user.getToken());
+				String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
+				String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
+				if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
+					//session not correct
+					log.info("Invalid session username:" + sessionUsername + " token:" + sessionToken);
+					user = null;
+				}
+				else {
+					log.info("Found user "+user.getUsername()+" with api key "+token);
+				}
 			}
-			log.info("Found user "+user.getUsername()+" with api key "+token);
+			
 		}
 		return user;
 	}
@@ -208,14 +208,13 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public UserDTO getUserFromSession(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			throw new SessionAuthenticationException("Session expired");
+		}
 		
 		String username = (String) session.getAttribute(Credentials.KEY_USERNAME);
 		String token = (String) session.getAttribute(Credentials.KEY_TOKEN);
-		
-		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(token)) {
-			throw new SessionAuthenticationException("Session expired");
-		}
 		
 		UserDTO userDTO = userJpaDAO.findByUsernameAndToken(username, token);
 		if (userDTO == null) {
@@ -230,6 +229,23 @@ public class AuthServiceImpl implements AuthService {
 		UserDTO userDTO = userJpaDAO.findByUsername(username);
 		
 		return userDTO != null && userDTO.isLive();
+	}
+
+	@Override
+	public void logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			try {
+				// reset token
+				UserDTO userDTO = getUserFromSession(request);
+				userDTO.generateToken();
+				userJpaDAO.save(userDTO);
+			} catch (SessionAuthenticationException e) {
+				// not do any thing, expired any way
+			}
+			
+			session.invalidate();
+		}
 	}
 	
 	

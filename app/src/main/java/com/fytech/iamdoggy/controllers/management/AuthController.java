@@ -50,7 +50,13 @@ public class AuthController {
     public UserDTO login(@RequestBody @Valid AuthUser authUser, HttpServletRequest request) throws AuthenticationException {
 		UserDTO userDTO = authService.login(authUser.getUsername(), authUser.getPassword());
 		
-		HttpSession session = request.getSession(true);	
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		
+		// make sure it is creating a new session after login
+		session = request.getSession();
 		session.setAttribute("username", userDTO.getUsername());
 		session.setAttribute("token", userDTO.getToken());
 		log.info("Found public user " + userDTO.getUsername() + " with token: " + userDTO.getToken());
@@ -91,9 +97,6 @@ public class AuthController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/logout")
     public void logout(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
+		authService.logout(request);
 	}
 }

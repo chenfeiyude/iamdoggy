@@ -27,7 +27,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// only apply new filter to the new spring api urls
 		http.antMatcher("/api/**");
-			
+		// we have handled fixation ourself, so disable spring one
+		http.sessionManagement().sessionFixation().none();
 		http.csrf().disable()
 			.cors().and()
 			.authorizeRequests()
