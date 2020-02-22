@@ -18,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @EnableJpaRepositories(
-		basePackages = {"com.fytech.iamdoggy.interfaces.daos.doggy"},
+		basePackages = {"com.feiyu4fun.iamdoggy.interfaces.daos.doggy"},
         entityManagerFactoryRef = "doggyEntityManagerFactory",
         transactionManagerRef = "doggyTransactionManager")
 public class DoggyDataSourceConfig extends CommonDataSourceConfig {
@@ -40,7 +40,7 @@ public class DoggyDataSourceConfig extends CommonDataSourceConfig {
     public LocalSessionFactoryBean doggySessionFactory() {
     	LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(poolDataSource());
-        sessionFactory.setPackagesToScan(new String[] { "com.fytech.iamdoggy.dtos.doggy" });
+        sessionFactory.setPackagesToScan(new String[] { "com.feiyu4fun.iamdoggy.dtos.doggy" });
         
         sessionFactory.setHibernateProperties(getJpaProperties());
    
@@ -52,7 +52,7 @@ public class DoggyDataSourceConfig extends CommonDataSourceConfig {
     public LocalContainerEntityManagerFactoryBean doggyEntityManagerFactory() {
          LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
          em.setDataSource(poolDataSource());
-         em.setPackagesToScan(new String[] { "com.fytech.iamdoggy.dtos.doggy" });
+         em.setPackagesToScan(new String[] { "com.feiyu4fun.iamdoggy.dtos.doggy" });
          JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
          em.setJpaVendorAdapter(vendorAdapter);
          return em;

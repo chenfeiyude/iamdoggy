@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableJpaRepositories(
-		basePackages = {"com.fytech.iamdoggy.interfaces.daos.management"},
+		basePackages = {"com.feiyu4fun.iamdoggy.interfaces.daos.management"},
         entityManagerFactoryRef = "managementEntityManagerFactory",
         transactionManagerRef = "managementTransactionManager")
 public class ManagementDataSourceConfig extends CommonDataSourceConfig {
@@ -41,7 +41,7 @@ public class ManagementDataSourceConfig extends CommonDataSourceConfig {
     public LocalSessionFactoryBean managementSessionFactory() {
     	LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(poolDataSource());
-        sessionFactory.setPackagesToScan(new String[] { "com.fytech.iamdoggy.dtos.management" });
+        sessionFactory.setPackagesToScan(new String[] { "com.feiyu4fun.iamdoggy.dtos.management" });
         
         sessionFactory.setHibernateProperties(getJpaProperties());
    
@@ -52,7 +52,7 @@ public class ManagementDataSourceConfig extends CommonDataSourceConfig {
     public LocalContainerEntityManagerFactoryBean managementEntityManagerFactory() {
          LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
          em.setDataSource(poolDataSource());
-         em.setPackagesToScan(new String[] { "com.fytech.iamdoggy.dtos.management" });
+         em.setPackagesToScan(new String[] { "com.feiyu4fun.iamdoggy.dtos.management" });
          JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
          em.setJpaVendorAdapter(vendorAdapter);
          return em;

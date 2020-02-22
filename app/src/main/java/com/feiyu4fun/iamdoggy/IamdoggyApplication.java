@@ -77,7 +77,7 @@ public class IamdoggyApplication implements ServletContextListener {
 	                		"http://localhost",
 	                		"http://localhost:8080",
 	                		"http://localhost:8081",
-	                		"http://iamdoggy.com");
+	                		"http://feiyu4fun.com");
             }
         };
     }
