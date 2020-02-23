@@ -66,19 +66,20 @@ public class IamdoggyApplication implements ServletContextListener {
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
-	
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                		.allowedOrigins(
-	                		"http://localhost",
-	                		"http://localhost:8080",
-	                		"http://localhost:8081",
-	                		"http://feiyu4fun.com");
-            }
-        };
-    }
+
+	// only work for not using spring security
+//	@Bean
+//	public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/api/**")
+//                		.allowedOrigins(
+//	                		"http://localhost",
+//	                		"http://localhost:8080",
+//	                		"http://localhost:8081",
+//	                		"http://feiyu4fun.com");
+//            }
+//        };
+//    }
 }
