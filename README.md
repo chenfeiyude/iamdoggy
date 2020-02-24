@@ -11,10 +11,9 @@
 1). Download lombok from the site Project Lombok https://projectlombok.org/download;  
 2). Close your Eclipse IDE if it is open;  
 3). Trigger lombok installation either by following the official installation steps or by executing the command:   
-
-    ```
-    java -jar lombok.jar;
-    ```
+```
+java -jar lombok.jar;
+```
 4). Restart IDE and rebuild projects
 
 2. for testing api, using postman or install httpie
@@ -93,13 +92,10 @@ server {
         proxy_set_header X-Forwarded-Server $host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_pass http://127.0.0.1:8080/iamdoggy/;
-        # add_header Access-Control-Allow-Origin '*';
         add_header Access-Control-Allow-Origin 'http://www.feiyu4fun.com';
         add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
-        # add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
         add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,request-from,token,username';
         add_header Access-Control-Allow-Credentials 'true';
-        # add_header Host 'feiyu4fun.com';
 
         if ($request_method = 'OPTIONS') {
            return 204;
