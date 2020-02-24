@@ -58,6 +58,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	    		);
 	}
 
+	// https://howtodoinjava.com/spring5/webmvc/spring-mvc-cors-configuration/
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
