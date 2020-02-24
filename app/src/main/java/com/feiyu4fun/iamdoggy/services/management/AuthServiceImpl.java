@@ -151,22 +151,16 @@ public class AuthServiceImpl implements AuthService {
 			log.warn("No user found for username: " + username + " token: " + token);
 		}
 		else {
-			HttpSession session = request.getSession(false);
-			if (session == null) {
-				log.info("User token has expired");
+			HttpSession session = request.getSession();
+			String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
+			String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
+			if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
+				//session not correct
+				log.info("Invalid session username:" + sessionUsername + " token:" + sessionToken);
 				user = null;
 			}
 			else {
-				String sessionUsername = (String) session.getAttribute(Credentials.KEY_USERNAME);
-				String sessionToken = (String) session.getAttribute(Credentials.KEY_TOKEN);
-				if (!username.equals(sessionUsername) || !token.equals(sessionToken)) {
-					//session not correct
-					log.info("Invalid session username:" + sessionUsername + " token:" + sessionToken);
-					user = null;
-				}
-				else {
-					log.info("Found user "+user.getUsername()+" with api key "+token);
-				}
+				log.info("Found user "+user.getUsername()+" with api key "+token);
 			}
 			
 		}
