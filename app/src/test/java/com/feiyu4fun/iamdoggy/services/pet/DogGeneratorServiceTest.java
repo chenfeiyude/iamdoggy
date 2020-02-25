@@ -46,8 +46,9 @@ public class DogGeneratorServiceTest {
 	public void generatePet() {
 		PetDTO petDTO = dogGeneratorService.generatePet(dogBreedConfigureDTO, userDTO);
 		assertNotNull(petDTO);
+		assertNull(petDTO.getName());
 		assertTrue(petDTO.isPrimary());
-		assertEquals(0, petDTO.getAge());
+		assertNotNull(petDTO.getAge());
 		Assert.assertEquals(PetState.live, petDTO.getState());
 		assertEquals(DogDTO.class, petDTO.getClass());
 		assertEquals(dogBreedConfigureDTO.getBreed(), ((DogDTO)petDTO).getBreed());
