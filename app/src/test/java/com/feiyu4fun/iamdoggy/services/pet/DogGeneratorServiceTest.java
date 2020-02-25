@@ -48,7 +48,7 @@ public class DogGeneratorServiceTest {
 		assertNotNull(petDTO);
 		assertNull(petDTO.getName());
 		assertTrue(petDTO.isPrimary());
-		assertNotNull(petDTO.getAge());
+		assertNotEquals("", petDTO.getAge());
 		Assert.assertEquals(PetState.live, petDTO.getState());
 		assertEquals(DogDTO.class, petDTO.getClass());
 		assertEquals(dogBreedConfigureDTO.getBreed(), ((DogDTO)petDTO).getBreed());

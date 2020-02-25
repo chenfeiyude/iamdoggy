@@ -36,8 +36,7 @@ public class PetDTO extends BaseDTO {
             bob.append(period.getYears()).append(" years ");
         if (period.getMonths() > 0)
             bob.append(period.getMonths()).append(" months ");
-        if (period.getDays() > 0)
-            bob.append(period.getDays()).append(" days ");
+        bob.append(period.getDays()==0?1:period.getDays()).append(" days ");
         age = bob.toString();
         return age;
     }
