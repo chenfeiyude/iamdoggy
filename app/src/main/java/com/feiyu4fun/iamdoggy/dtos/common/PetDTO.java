@@ -30,7 +30,7 @@ public class PetDTO extends BaseDTO {
     public String getAge() {
         if (age != null)
             return age;
-        Period period = Period.between(LocalDateTime.now().toLocalDate(), born.toLocalDate());
+        Period period = Period.between(born.toLocalDate(), LocalDateTime.now().toLocalDate());
         StringBuilder bob = new StringBuilder();
         if (period.getYears() > 0)
             bob.append(period.getYears()).append(" years ");
