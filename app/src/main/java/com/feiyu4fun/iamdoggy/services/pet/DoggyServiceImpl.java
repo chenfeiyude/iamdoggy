@@ -45,6 +45,20 @@ public class DoggyServiceImpl implements DoggyService {
 		}
 		return null;
 	}
-	
-	
+
+	@Override
+	public DogDTO setPrimaryDog(UserDTO userDTO, long pid) {
+		DogDTO dogDTO = getDog(userDTO, pid);
+		if (dogDTO != null && !dogDTO.isPrimary()) {
+			// reset primary dog
+			DogDTO primaryDog = getPrimaryDog(userDTO);
+			primaryDog.setPrimary(false);
+			dogJpaDAO.save(primaryDog);
+			dogDTO.setPrimary(true);
+			dogJpaDAO.save(dogDTO);
+		}
+		return dogDTO;
+	}
+
+
 }

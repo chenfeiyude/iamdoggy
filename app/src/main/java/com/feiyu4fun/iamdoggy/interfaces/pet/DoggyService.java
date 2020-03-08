@@ -9,4 +9,5 @@ public interface DoggyService {
 	DogDTO getDog(UserDTO userDTO, long pid);
 	List<DogDTO> getDogs(UserDTO userDTO);
 	DogDTO getPrimaryDog(UserDTO userDTO);
+	DogDTO setPrimaryDog(UserDTO userDTO, long pid);
 }
