@@ -1,5 +1,6 @@
 package com.feiyu4fun.iamdoggy.dtos.common;
 
+import com.feiyu4fun.iamdoggy.configurations.MiscConfigure;
 import com.feiyu4fun.iamdoggy.enums.PetHealthyState;
 import com.feiyu4fun.iamdoggy.enums.PetState;
 import lombok.Data;
@@ -21,8 +22,10 @@ public class PetDTO extends BaseDTO {
     protected LocalDateTime born = LocalDateTime.now();
     protected int cost;
     protected boolean isPrimary = false;
-    
+
+    protected int experience = 0; // TODO add a experience table
     protected int level = 0;
+    protected int hp = MiscConfigure.DEFAULT_INIT_HP;
     protected int speed;
     protected int attack;
     protected int defence;

@@ -7,4 +7,5 @@ public class MiscConfigure {
 	public final static int DEFAULT_FIND_DOG_COST = 600;
 	
 	public final static int MAX_INIT_ABILITY = 20; // speed, attack, defence
+	public final static int DEFAULT_INIT_HP = 100;
 }

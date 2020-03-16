@@ -60,5 +60,14 @@ public class DoggyServiceImpl implements DoggyService {
 		return dogDTO;
 	}
 
+	@Override
+	public void attack(DogDTO dogDTO) {
+		if (dogDTO != null) {
+			// TODO load a random dog, if cannot find one then generate a random one
+//			DogDTO targetDogDTO =
+			dogJpaDAO.save(dogDTO);
+		}
+	}
+
 
 }
